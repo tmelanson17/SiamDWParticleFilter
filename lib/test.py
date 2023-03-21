@@ -7,7 +7,8 @@ from torch.autograd import Variable
 # Test script for running the model raw
 if __name__ == "__main__":
     # Currently randomly initialized
-    t = model.SiamFCRes22()
+    t = model.SiamFCRes22W()
+    utils.load_pretrain(t, "/home/noisebridge/development/SiamDWParticleFilter/models/SiamFCRes22W.pth")
     # Collect template image
     template=np.ones([500,200,3])
     template_torch = utils.im_to_torch(template)
@@ -16,4 +17,5 @@ if __name__ == "__main__":
     # Test against random image
     test=np.random.random([500,200,3])
     test_var = Variable(utils.im_to_torch(test).unsqueeze(0))
-    t.track(test_var)
+    output = t.track(test_var)
+    print(output)
